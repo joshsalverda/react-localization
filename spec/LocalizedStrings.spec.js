@@ -55,7 +55,7 @@ describe('Main Library Functions', function () {
   });
   it('Format string in default language', function () {
     expect(strings.formatString(strings.formattedValue, "cake", "ice-cream"))
-      .toEqual(["I'd like some ", "cake", " and ", "ice-cream", ", or just ", "cake"]);
+      .toEqual("I'd like some cake and ice-cream, or just cake");
   });
 
   //Switch language
@@ -80,7 +80,7 @@ describe('Main Library Functions', function () {
   });
   it('Format string in other language', function () {
     expect(strings.formatString(strings.formattedValue, "torta", "gelato"))
-      .toEqual(["Vorrei un po' di ", "torta", " e ", "gelato", ", o solo ", "torta"]);
+      .toEqual("Vorrei un po' di torta e gelato, o solo torta");
   });
 
   it('Get string in a different language', function () {

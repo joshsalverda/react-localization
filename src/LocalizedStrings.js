@@ -126,18 +126,28 @@ export default class LocalizedStrings {
     //Use example:
     //  strings.formatString(strings.question, strings.bread, strings.butter)
     formatString(str, ...valuesForPlaceholders) {
-        return str
+        let hasComponent = false;
+
+        const stringPieces = str
             .split(placeholderRegex)
             .filter(textPart => !!textPart)
             .map((textPart, index) => {
                 if (textPart.match(placeholderRegex)) {
                     const valueForPlaceholder = valuesForPlaceholders[textPart.slice(1, -1)];
-                    return isReactComponent(valueForPlaceholder)
-                        ? React.Children.toArray(valueForPlaceholder).map(component => ({...component, key: index.toString()}))
-                        : valueForPlaceholder;
+                    if(isReactComponent(valueForPlaceholder)) {
+                        hasComponent = true;
+                        return React.Children.toArray(valueForPlaceholder).map(component => ({...component, key: index.toString()}));
+                    }
+                    return valueForPlaceholder;
                 }
                 return textPart;
             });
+
+        if(hasComponent === false) {
+            return stringPieces.join('');
+        }
+
+        return stringPieces;
     }
 
     //Return a string with the passed key in a different language 
